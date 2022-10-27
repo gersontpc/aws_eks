@@ -45,7 +45,7 @@ variable "karpenter_instance_sizes" {
   type        = list(any)
   description = "Instance sizes to diversify into instance family"
   default = [
-    "nano"
+    "micro"
   ]
 }
 
@@ -62,7 +62,7 @@ variable "karpenter_availability_zones" {
 variable "karpenter_cpu_limit" {
   type        = string
   description = "CPU Limits to launch total nodes"
-  default     = "100"
+  default     = "10"
 }
 
 variable "karpenter_memory_limit" {
@@ -80,11 +80,11 @@ variable "addon_coredns_version" {
 variable "addon_kubeproxy_version" {
   type        = string
   description = "KubeProxy addon version"
-  default     = "v1.20.4-eksbuild.2"
+  default     = "v1.23.8-eksbuild.2"
 }
 
 variable "addon_cni_version" {
   type        = string
   description = "VPC CNI addon version"
-  default     = "v1.11.2-eksbuild.1"
+  default     = "v1.11.4-eksbuild.1"
 }

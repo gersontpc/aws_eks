@@ -20,14 +20,14 @@ repos:
       files: (\.tf|\.tfvars)$
       exclude: \.terraform\/.*$
 
-    - id: terraform_tflint
-      name: Terraform validate with tflint
-      description: Validates all Terraform configuration files with TFLint.
-      require_serial: true
-      entry: hooks/terraform_tflint.sh
-      language: script
-      files: (\.tf|\.tfvars)$
-      exclude: \.terraform\/.*$
+    # - id: terraform_tflint
+    #   name: Terraform validate with tflint
+    #   description: Validates all Terraform configuration files with TFLint.
+    #   require_serial: true
+    #   entry: hooks/terraform_tflint.sh
+    #   language: script
+    #   files: (\.tf|\.tfvars)$
+    #   exclude: \.terraform\/.*$
 
     - id: terraform_checkov
       name: Checkov
