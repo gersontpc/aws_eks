@@ -21,6 +21,8 @@ resource "aws_eks_addon" "coredns" {
   resolve_conflicts = "OVERWRITE"
 
   depends_on = [
+    kubernetes_config_map.aws-auth,
+    aws_eks_node_group.this,
     helm_release.karpenter
   ]
 }

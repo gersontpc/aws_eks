@@ -1,6 +1,4 @@
 resource "kubernetes_config_map" "aws-auth" {
-  count = 0
-
   metadata {
     name      = "aws-auth"
     namespace = "kube-system"
@@ -18,7 +16,7 @@ resource "kubernetes_config_map" "aws-auth" {
   groups:
   - system:bootstrappers
   - system:nodes
-  - system:node-proxier  
+  - system:node-proxier
 YAML
   }
 }

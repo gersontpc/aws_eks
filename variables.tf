@@ -1,12 +1,8 @@
 variable "cluster_name" {
-  default = "gson-labs-new"
+  default     = "backend"
+  description = "Cluster name"
+  type        = string
 }
-
-# variable "vpc_id" {
-#   description = "ID of the VPC where the cluster and its nodes will be provisioned"
-#   type        = string
-#   default     = null
-# }
 
 variable "subnet_ids" {
   type        = list(string)
@@ -20,61 +16,46 @@ variable "k8s_version" {
 }
 
 variable "tags" {
-  description = "A map of tags to add to all resources"
   type        = map(string)
-  default     = {}
+  description = "A map of tags to add to all resources"
 }
 
-variable "karpenter_capacity_type" {
-  type        = list(any)
-  description = "Capacity Type; Ex spot, on_demand"
-  default = [
-    "on-demand"
-  ]
+# Node Group
+
+variable "node_groups" {
+  description = "config block for node groups"
+  type = list(object({
+    name                       = string
+    labels                     = map(string)
+    instance_types             = list(string)
+    capacity_type              = string
+    max_unavailable_percentage = number
+    desired_capacity           = number
+    max_capacity               = number
+    min_capacity               = number
+  }))
 }
 
-variable "karpenter_instance_family" {
-  type        = list(any)
-  description = "Instance family list to launch on karpenter"
-  default = [
-    "t3"
-  ]
+# Karpenter Capacity
+
+variable "karpenter" {
+  description = "Set capacity for Karpenter nodes"
+  type = object({
+    capacity_type      = list(string)
+    instance_family    = list(string)
+    instance_sizes     = list(string)
+    availability_zones = list(string)
+    cpu_limit          = number
+    memory_limit       = string
+  })
 }
 
-variable "karpenter_instance_sizes" {
-  type        = list(any)
-  description = "Instance sizes to diversify into instance family"
-  default = [
-    "micro"
-  ]
-}
-
-variable "karpenter_availability_zones" {
-  type        = list(any)
-  description = "Availability zones to launch nodes"
-  default = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
-  ]
-}
-
-variable "karpenter_cpu_limit" {
-  type        = string
-  description = "CPU Limits to launch total nodes"
-  default     = "10"
-}
-
-variable "karpenter_memory_limit" {
-  type        = string
-  description = "Memory Limits to launch total nodes"
-  default     = "4000Gi"
-}
+# AddOns
 
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS addon version"
-  default     = "v1.8.7-eksbuild.1"
+  default     = "v1.8.7-eksbuild.2"
 }
 
 variable "addon_kubeproxy_version" {
