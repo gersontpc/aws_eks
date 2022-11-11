@@ -12,11 +12,6 @@ resource "aws_eks_cluster" "master" {
     endpoint_public_access  = true
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.master-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.master-AmazonEKSVPCResourceController,
-  ]
-
   tags = merge(
     var.tags,
     {
@@ -24,6 +19,11 @@ resource "aws_eks_cluster" "master" {
       "karpenter.sh/discovery"                    = var.cluster_name
     }
   )
+
+  depends_on = [
+    aws_iam_role_policy_attachment.master-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.master-AmazonEKSVPCResourceController,
+  ]
 }
 
 resource "aws_security_group_rule" "nodeport_eks" {

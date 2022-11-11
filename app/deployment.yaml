@@ -12,7 +12,7 @@ spec:
       labels:
         app: inflate
     spec:
-      terminationGracePeriodSeconds: 0
+      # terminationGracePeriodSeconds: 0
       # nodeSelector:
       #   topology.kubernetes.io/zone: us-east-1
       #   karpenter.sh/capacity-type: on-demand
