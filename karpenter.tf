@@ -37,15 +37,18 @@ resource "helm_release" "karpenter" {
 }
 
 resource "kubectl_manifest" "karpenter_provisioner" {
+  count = length(var.karpenter_provider)
   yaml_body = templatefile(
-    "${path.module}/files/karpenter/provisioner.yml.tpl", {
-      EKS_CLUSTER        = aws_eks_cluster.master.name
-      CAPACITY_TYPE      = var.karpenter.capacity_type
-      INSTANCE_FAMILY    = var.karpenter.instance_family
-      INSTANCE_SIZES     = var.karpenter.instance_sizes
-      AVAILABILITY_ZONES = var.karpenter.availability_zones
-      CPU_LIMIT          = var.karpenter.cpu_limit
-      MEMORY_LIMIT       = var.karpenter.memory_limit
+    "${path.module}/templates/karpenter/provisioner.yml.tpl", {
+      PROVIDER_NAME      = var.karpenter_provider[count.index].provider_name
+      CAPACITY_TYPE      = var.karpenter_provider[count.index].capacity_type
+      INSTANCE_FAMILY    = var.karpenter_provider[count.index].instance_family
+      INSTANCE_SIZES     = var.karpenter_provider[count.index].instance_sizes
+      AVAILABILITY_ZONES = var.karpenter_provider[count.index].availability_zones
+      CPU_LIMIT          = var.karpenter_provider[count.index].cpu_limit
+      MEMORY_LIMIT       = var.karpenter_provider[count.index].memory_limit
+      TTL_SCALING_EMPTY  = var.karpenter_provider[count.index].ttl_scaling_empty
+      TTL_NODES          = var.karpenter_provider[count.index].ttl_nodes
   })
 
   depends_on = [
@@ -54,10 +57,12 @@ resource "kubectl_manifest" "karpenter_provisioner" {
 }
 
 resource "kubectl_manifest" "karpenter_node_template" {
+  count = length(var.karpenter_provider)
   yaml_body = templatefile(
-    "${path.module}/files/karpenter/node-template.yml.tpl", {
-      EKS_CLUSTER     = var.cluster_name,
-      LAUNCH_TEMPLATE = format("%s-template", var.cluster_name)
+    "${path.module}/templates/karpenter/node-template.yml.tpl", {
+      PROVIDER_NAME   = var.karpenter_provider[count.index].provider_name
+      LAUNCH_TEMPLATE = format("%s-template-karpenter", var.cluster_name)
+      CLUSTER_NAME    = var.cluster_name
   })
 
   depends_on = [

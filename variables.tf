@@ -66,16 +66,19 @@ variable "node_groups" {
 
 # Karpenter Capacity
 
-variable "karpenter" {
+variable "karpenter_provider" {
   description = "Set capacity for Karpenter nodes"
-  type = object({
+  type = list(object({
+    provider_name      = string
     capacity_type      = list(string)
     instance_family    = list(string)
     instance_sizes     = list(string)
     availability_zones = list(string)
     cpu_limit          = number
     memory_limit       = string
-  })
+    ttl_scaling_empty  = number
+    ttl_nodes          = number
+  }))
 }
 
 # AddOns
@@ -83,7 +86,7 @@ variable "karpenter" {
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS addon version"
-  default     = "v1.8.7-eksbuild.2"
+  default     = "v1.8.7-eksbuild.3"
 }
 
 variable "addon_kubeproxy_version" {
@@ -95,5 +98,5 @@ variable "addon_kubeproxy_version" {
 variable "addon_cni_version" {
   type        = string
   description = "VPC CNI addon version"
-  default     = "v1.11.4-eksbuild.1"
+  default     = "v1.12.0-eksbuild.1"
 }

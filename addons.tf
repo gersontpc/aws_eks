@@ -7,7 +7,7 @@ resource "aws_eks_addon" "cni" {
   resolve_conflicts = "OVERWRITE"
 
   depends_on = [
-    kubernetes_config_map.aws-auth
+    aws_eks_cluster.master
   ]
 
 }
@@ -21,9 +21,10 @@ resource "aws_eks_addon" "coredns" {
   resolve_conflicts = "OVERWRITE"
 
   depends_on = [
-    kubernetes_config_map.aws-auth,
-    aws_eks_node_group.this,
-    helm_release.karpenter
+    aws_eks_cluster.master,
+    aws_eks_addon.cni,
+    aws_eks_addon.kubeproxy,
+    aws_eks_node_group.this
   ]
 }
 
@@ -36,6 +37,7 @@ resource "aws_eks_addon" "kubeproxy" {
   resolve_conflicts = "OVERWRITE"
 
   depends_on = [
-    kubernetes_config_map.aws-auth
+    aws_eks_cluster.master,
+    aws_eks_addon.cni
   ]
 }

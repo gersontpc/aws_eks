@@ -3,7 +3,7 @@ k8s_version = "1.23"
 
 node_groups = [
   {
-    name = "karpenter-poc"
+    name = "infra-resources"
     labels = {
       "namespace" = "karpenter-poc",
       "env"       = "dev"
@@ -20,52 +20,64 @@ node_groups = [
   }
 ]
 
-map_roles = [
+karpenter_provider = [
   {
-    rolearn  = "arn:aws:iam::66666666666:role/role1"
-    username = "role1"
-    groups   = ["system:masters"]
-  },
+    provider_name = "karpenter"
+    capacity_type = [
+      "on-demand",
+      "spot"
+    ]
+    instance_family = [
+      "t3",
+      "t2",
+      "t3a"
+    ]
+    instance_sizes = [
+      "medium"
+    ]
+    availability_zones = [
+      "us-east-1a",
+      "us-east-1b",
+      "us-east-1c"
+    ]
+    cpu_limit         = "20"
+    memory_limit      = "10000Gi"
+    ttl_scaling_empty = "30"
+    ttl_nodes         = "2592000"
+  }
 ]
-
-map_users = [
-  {
-    userarn  = "arn:aws:iam::66666666666:user/user1"
-    username = "user1"
-    groups   = ["system:masters"]
-  },
-  {
-    userarn  = "arn:aws:iam::66666666666:user/user2"
-    username = "user2"
-    groups   = ["system:masters"]
-  },
-]
-
-map_accounts = [
-  "777777777777",
-  "888888888888",
-]
-
-karpenter = {
-  capacity_type = ["on-demand"]
-  instance_family = [
-    "t3",
-    "t2",
-    "t3a"
-  ]
-  instance_sizes = [
-    "small",
-    "medium"
-  ]
-  availability_zones = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
-  ]
-  cpu_limit    = "20"
-  memory_limit = "10000Gi"
-}
 
 tags = {
   "Environment" = "Lab"
 }
+
+# map_roles = [
+#   {
+#     rolearn  = "arn:aws:iam::66666666666:role/role1"
+#     username = "role1"
+#     groups   = ["system:masters"]
+#   },
+#   {
+#     rolearn  = "arn:aws:iam::66666666666:role/role2"
+#     username = "role1"
+#     groups   = ["system:masters"]
+#   }
+# ]
+
+# map_users = [
+#   {
+#     userarn  = "arn:aws:iam::66666666666:user/user1"
+#     username = "user1"
+#     groups   = ["system:masters"]
+#   },
+#   {
+#     userarn  = "arn:aws:iam::66666666666:user/user2"
+#     username = "user2"
+#     groups   = ["system:masters"]
+#   },
+# ]
+
+# map_accounts = [
+#   "777777777777",
+#   "888888888888",
+# ]

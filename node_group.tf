@@ -42,6 +42,7 @@ resource "aws_eks_node_group" "this" {
     aws_iam_role_policy_attachment.ssm,
     aws_iam_role_policy_attachment.cloudwatch,
     aws_launch_template.main,
-    aws_eks_cluster.master
+    aws_eks_cluster.master,
+    kubernetes_config_map.aws-auth
   ]
 }

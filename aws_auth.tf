@@ -17,8 +17,24 @@ resource "kubernetes_config_map" "aws-auth" {
   - system:bootstrappers
   - system:nodes
   - system:node-proxier
+- rolearn: ${aws_iam_role.node_group.arn}
+  username: system:node:{{SessionName}}
+  groups:
+  - system:bootstrappers
+  - system:nodes
+  - system:node-proxier
+- rolearn: ${aws_iam_role.node_group.arn}
+  username: system:node:{{EC2PrivateDNSName}}
+  groups:
+  - system:bootstrappers
+  - system:nodes
 YAML
   }
+
+  depends_on = [
+    aws_eks_cluster.master
+  ]
+
 }
 
 resource "kubernetes_config_map_v1_data" "aws_auth" {
@@ -36,5 +52,9 @@ resource "kubernetes_config_map_v1_data" "aws_auth" {
   }
 
   force = true
+
+  depends_on = [
+    aws_eks_cluster.master
+  ]
 
 }

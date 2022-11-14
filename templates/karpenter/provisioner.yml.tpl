@@ -1,7 +1,7 @@
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: ${EKS_CLUSTER}
+  name: ${PROVIDER_NAME}
 spec:
   requirements:
     - key: karpenter.sh/capacity-type
@@ -32,7 +32,7 @@ spec:
     resources:
       cpu: ${CPU_LIMIT}
       memory: ${MEMORY_LIMIT}
-  providerRef:                                # optional, recommended to use instead of `provider`
-    name: ${EKS_CLUSTER}
-  ttlSecondsAfterEmpty: 30                    # optional, but never scales down if not set
-  ttlSecondsUntilExpired: 2592000             # optional, but never expires
+  providerRef:                                                # optional, recommended to use instead of `provider`
+    name: ${PROVIDER_NAME}
+  ttlSecondsAfterEmpty: ${TTL_SCALING_EMPTY}                  # optional (30), but never scales down if not set
+  ttlSecondsUntilExpired: ${TTL_NODES}                        # optional(2592000), but never expires
