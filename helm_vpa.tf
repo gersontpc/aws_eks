@@ -3,7 +3,7 @@ resource "helm_release" "virtual_pod_autoscaler" {
   name       = "vpa"
   repository = "https://charts.fairwinds.com/stable"
   chart      = "vpa"
-  version    = "0.11"
+  version    = "1.5.0"
 
   set {
     name  = "recommender.enabled"

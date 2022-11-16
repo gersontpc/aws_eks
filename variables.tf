@@ -81,6 +81,16 @@ variable "karpenter_provider" {
   }))
 }
 
+## Service Accounts
+
+variable "service_account" {
+  description = "Create Services Accounts"
+  type = list(object({
+    name      = string
+    namespace = string
+  }))
+}
+
 # AddOns
 
 variable "addon_coredns_version" {
