@@ -47,6 +47,17 @@ karpenter_provider = [
   }
 ]
 
+service_account = [
+  {
+    name      = "default-sa"
+    namespace = "default"
+  },
+  {
+    name      = "commons-sa"
+    namespace = "commons"
+  }
+]
+
 tags = {
   "Environment" = "Lab"
 }
