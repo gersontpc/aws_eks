@@ -177,5 +177,8 @@ resource "kubernetes_namespace" "this" {
   count = length(var.service_account)
   metadata {
     name = lower(var.service_account[count.index].namespace)
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }

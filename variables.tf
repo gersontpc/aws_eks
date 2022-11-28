@@ -4,6 +4,11 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "Define VPC ID"
+}
+
 variable "subnet_ids" {
   type        = list(string)
   description = "Subnets Ids"
@@ -13,6 +18,12 @@ variable "subnet_ids" {
 variable "k8s_version" {
   type        = string
   description = "(optional) describe your variable"
+}
+
+variable "region" {
+  type        = string
+  description = "Set Region"
+  default     = "us-east-1"
 }
 
 variable "tags" {
@@ -109,4 +120,12 @@ variable "addon_cni_version" {
   type        = string
   description = "VPC CNI addon version"
   default     = "v1.12.0-eksbuild.1"
+}
+
+# Istio
+
+variable "create_istio" {
+  type        = bool
+  description = "Create istio components"
+  default     = false
 }
