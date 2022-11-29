@@ -107,13 +107,13 @@ variable "service_account" {
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS addon version"
-  default     = "v1.8.7-eksbuild.3"
+  default     = "v1.8.4-eksbuild.2"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "KubeProxy addon version"
-  default     = "v1.23.8-eksbuild.2"
+  default     = "v1.21.14-eksbuild.2"
 }
 
 variable "addon_cni_version" {
