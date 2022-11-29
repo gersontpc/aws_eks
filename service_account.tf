@@ -140,7 +140,7 @@ resource "aws_iam_role" "service_account" {
       },
       "Condition": {
         "StringEquals": {
-          "${aws_eks_cluster.master.identity[0].oidc[0].issuer}:sub" : "system:serviceaccount:${var.service_account[count.index].namespace}:${var.service_account[count.index].name}"
+          "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub" : "system:serviceaccount:${var.service_account[count.index].namespace}:${var.service_account[count.index].name}"
         }
       },
       "Action": "sts:AssumeRoleWithWebIdentity"
@@ -177,5 +177,8 @@ resource "kubernetes_namespace" "this" {
   count = length(var.service_account)
   metadata {
     name = lower(var.service_account[count.index].namespace)
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }

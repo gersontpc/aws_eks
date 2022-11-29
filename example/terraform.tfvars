@@ -1,5 +1,7 @@
-subnet_ids  = ["subnet-a7f29fc0", "subnet-5a2f4474", "subnet-267a466c"]
-k8s_version = "1.23"
+create_istio = false
+vpc_id       = "vpc-1d6bd267"
+subnet_ids   = ["subnet-a7f29fc0", "subnet-5a2f4474", "subnet-267a466c"]
+k8s_version  = "1.21"
 
 node_groups = [
   {
@@ -14,9 +16,9 @@ node_groups = [
     ]
     capacity_type              = "SPOT"
     max_unavailable_percentage = 50
-    desired_capacity           = 2
+    desired_capacity           = 4
     max_capacity               = 5
-    min_capacity               = 2
+    min_capacity               = 4
   }
 ]
 
@@ -49,10 +51,6 @@ karpenter_provider = [
 
 service_account = [
   {
-    name      = "default-sa"
-    namespace = "default"
-  },
-  {
     name      = "commons-sa"
     namespace = "commons"
   }
@@ -61,6 +59,7 @@ service_account = [
 tags = {
   "Environment" = "Lab"
 }
+
 
 # map_roles = [
 #   {

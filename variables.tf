@@ -4,6 +4,11 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "Define VPC ID"
+}
+
 variable "subnet_ids" {
   type        = list(string)
   description = "Subnets Ids"
@@ -13,6 +18,12 @@ variable "subnet_ids" {
 variable "k8s_version" {
   type        = string
   description = "(optional) describe your variable"
+}
+
+variable "region" {
+  type        = string
+  description = "Set Region"
+  default     = "us-east-1"
 }
 
 variable "tags" {
@@ -96,17 +107,25 @@ variable "service_account" {
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS addon version"
-  default     = "v1.8.7-eksbuild.3"
+  default     = "v1.8.4-eksbuild.2"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "KubeProxy addon version"
-  default     = "v1.23.8-eksbuild.2"
+  default     = "v1.21.14-eksbuild.2"
 }
 
 variable "addon_cni_version" {
   type        = string
   description = "VPC CNI addon version"
   default     = "v1.12.0-eksbuild.1"
+}
+
+# Istio
+
+variable "create_istio" {
+  type        = bool
+  description = "Create istio components"
+  default     = false
 }
