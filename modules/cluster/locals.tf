@@ -10,6 +10,6 @@ locals {
     }
   )
 
-  create_istio = (var.create_istio) ? 1 : 0
+  # create_istio = (var.create_istio) ? 1 : 0
 
 }

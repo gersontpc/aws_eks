@@ -75,23 +75,6 @@ variable "node_groups" {
   }))
 }
 
-# Karpenter Capacity
-
-variable "karpenter_provider" {
-  description = "Set capacity for Karpenter nodes"
-  type = list(object({
-    provider_name      = string
-    capacity_type      = list(string)
-    instance_family    = list(string)
-    instance_sizes     = list(string)
-    availability_zones = list(string)
-    cpu_limit          = number
-    memory_limit       = string
-    ttl_scaling_empty  = number
-    ttl_nodes          = number
-  }))
-}
-
 ## Service Accounts
 
 variable "service_account" {
@@ -120,12 +103,4 @@ variable "addon_cni_version" {
   type        = string
   description = "VPC CNI addon version"
   default     = "v1.12.0-eksbuild.1"
-}
-
-# Istio
-
-variable "create_istio" {
-  type        = bool
-  description = "Create istio components"
-  default     = false
 }

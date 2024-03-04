@@ -1,15 +1,9 @@
 provider "aws" {
   region = "us-east-1"
+  default_tags {
+    tags = module.default_tags.tags
+  }
 }
-
-# Backend
-# terraform {
-#   backend "s3" {
-#     bucket = "223341017520-tfstate"
-#     key    = "479610723/gson-labs-new.tfvars"
-#     region = "us-east-1"
-#   }
-# }
 
 provider "kubernetes" {
   host                   = aws_eks_cluster.master.endpoint

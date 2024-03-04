@@ -79,16 +79,6 @@ resource "helm_release" "alb_ingress_controller" {
 
   }
 
-  # set {
-  #   name  = "image.repository"
-  #   value = "602401143452.dkr.ecr.sa-east-1.amazonaws.com/amazon/aws-load-balancer-controller"
-  # }
-
-  # set {
-  #   name  = "image.tag"
-  #   value = "v2.2.1"
-  # }
-
   depends_on = [
     aws_eks_cluster.master,
     aws_eks_node_group.this,
